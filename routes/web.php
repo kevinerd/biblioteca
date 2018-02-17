@@ -12,5 +12,54 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('admin', function(){
+    return view('admin');
+});
+
+Route::get('admin/prestamos', function(){
+    return view('prestamos');
+});
+
+Route::get('admin/socios', function(){
+    return view('socios');
+});
+
+Route::get('admin/informes', function(){
+    return view('informes');
+});
+
+Route::get('admin/autores', function(){
+   return view('autores');
+});
+
+Route::get('admin/', function(){
+    return view('');
+});
+
+Route::get('registro', function(){
+    return view('registro');
+});
+
+Route::any('ingreso/login', array(
+    'as' => 'ingreso.login',
+    'uses' => 'IngresoController@login'
+));
+
+/*  Rutas del site  */
+Route::get('site/libros', array(
+    'as' => 'site.libros',
+    'uses' => 'SiteController@libros'
+));
+
+Route::get('site/contacto', array(
+    'as' => 'site.contacto',
+    'uses' => 'SiteController@contacto'
+));
+
+Route::post('site/process-contacto', array(
+    'as' => 'site.process.contacto',
+    'uses' => 'SiteController@emailContactoSite'
+));
