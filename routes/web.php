@@ -11,37 +11,35 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', array(
+    'as' => 'home',
+    'uses' => 'SiteController@home'
+));
 
-Route::get('admin', function(){
-    return view('admin');
-});
+Route::get('admin', array(
+    'as' => 'admin',
+    'uses' => 'SiteController@admin'
+));
 
-Route::get('admin/prestamos', function(){
-    return view('prestamos');
-});
+Route::get('admin/autores', array(
+    'as' => 'autores',
+    'uses' => 'SiteController@autores'
+));
 
-Route::get('admin/socios', function(){
-    return view('socios');
-});
+Route::get('admin/informes', array(
+    'as' => 'informes',
+    'uses' => 'SiteController@informes'
+));
 
-Route::get('admin/informes', function(){
-    return view('informes');
-});
+Route::get('admin/prestamos', array(
+    'as' => 'prestamos',
+    'uses' => 'SiteController@prestamos'
+));
 
-Route::get('admin/autores', function(){
-   return view('autores');
-});
-
-Route::get('admin/', function(){
-    return view('');
-});
-
-Route::get('registro', function(){
-    return view('registro');
-});
+Route::get('admin/socios', array(
+    'as' => 'socios',
+    'uses' => 'SiteController@socios'
+));
 
 Route::any('ingreso/login', array(
     'as' => 'ingreso.login',
