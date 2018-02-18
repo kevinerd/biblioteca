@@ -10,12 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', array(
-    'as' => 'home',
-    'uses' => 'SiteController@home'
-));
-
 Route::get('admin', array(
     'as' => 'admin',
     'uses' => 'SiteController@admin'
@@ -23,7 +17,7 @@ Route::get('admin', array(
 
 Route::get('admin/autores', array(
     'as' => 'autores',
-    'uses' => 'SiteController@autores'
+    'uses' => 'AutoresController@autores'
 ));
 
 Route::get('admin/informes', array(
@@ -33,12 +27,12 @@ Route::get('admin/informes', array(
 
 Route::get('admin/prestamos', array(
     'as' => 'prestamos',
-    'uses' => 'SiteController@prestamos'
+    'uses' => 'PrestamosController@prestamos'
 ));
 
 Route::get('admin/socios', array(
     'as' => 'socios',
-    'uses' => 'SiteController@socios'
+    'uses' => 'SociosController@socios'
 ));
 
 Route::any('ingreso/login', array(
@@ -47,9 +41,14 @@ Route::any('ingreso/login', array(
 ));
 
 /*  Rutas del site  */
+Route::get('site/', array(
+    'as' => 'site.home',
+    'uses' => 'SiteController@home'
+));
+
 Route::get('site/libros', array(
     'as' => 'site.libros',
-    'uses' => 'SiteController@libros'
+    'uses' => 'LibrosController@libros'
 ));
 
 Route::get('site/contacto', array(
