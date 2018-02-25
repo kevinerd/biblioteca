@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ValidateForm;
 
 class SiteController extends Controller
 {
@@ -12,5 +12,16 @@ class SiteController extends Controller
 
     public function contacto(){
         return view('site.contacto');
+    }
+
+    public function contacto_response(){
+        return view('site.contacto_response');
+    }
+
+    public function formularioSite(ValidateForm $request) {
+        $data = $request->all();
+
+        return back()
+            ->with('info', 'Tu mensaje ha sido enviado, en breve recibirás una respuesta.');
     }
 }
