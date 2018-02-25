@@ -1,0 +1,1 @@
+@extends(layout)@section(contenido)    <form action=""></form>@stop
