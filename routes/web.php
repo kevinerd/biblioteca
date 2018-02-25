@@ -58,5 +58,5 @@ Route::get('site/contacto', array(
 
 Route::post('site/process-contacto', array(
     'as' => 'site.process.contacto',
-    'uses' => 'SiteController@emailContactoSite'
+    'uses' => 'SiteController@formularioSite'
 ));
