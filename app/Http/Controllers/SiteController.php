@@ -10,13 +10,13 @@ class SiteController extends Controller
         return view('site.index');
     }
 
-    public function contacto(){
+    /*public function contacto(){
         return view('site.contacto');
     }
 
     public function contacto_response(){
         return view('site.contacto_response');
-    }
+    }*/
 
     public function formularioSite(ValidateForm $request) {
         $data = $request->all();

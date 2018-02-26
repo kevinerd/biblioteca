@@ -35,10 +35,10 @@ Route::get('admin/socios', array(
     'uses' => 'SociosController@socios'
 ));
 
-Route::any('ingreso/login', array(
+/*Route::any('ingreso/login', array(
     'as' => 'ingreso.login',
     'uses' => 'IngresoController@login'
-));
+));*/
 
 /*  Rutas del site  */
 Route::get('site/', array(
@@ -51,12 +51,4 @@ Route::get('site/libros', array(
     'uses' => 'LibrosController@libros'
 ));
 
-Route::get('site/contacto', array(
-    'as' => 'site.contacto',
-    'uses' => 'SiteController@contacto'
-));
-
-Route::post('site/process-contacto', array(
-    'as' => 'site.process.contacto',
-    'uses' => 'SiteController@formularioSite'
-));
+Route::resource('mensajes', 'MensajesController');
