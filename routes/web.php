@@ -51,7 +51,44 @@ Route::get('site/libros', array(
     'uses' => 'LibrosController@libros'
 ));
 
-Route::get('site/contacto', array(
+Route::get('site/mensajes/crear', array(
+    'as' => 'site.mensajes.crear',
+    'uses' => 'MensajesController@create'
+));
+
+Route::post('site/mensajes', array(
+    'as' => 'site.mensajes',
+    'uses' => 'MensajesController@store'
+));
+
+/*ADMINISTRACIÓN*/
+Route::get('admin/mensajes', array(
+    'as' => 'mensajes.index',
+    'uses' => 'MensajesController@index'
+));
+
+Route::get('admin/mensajes/{id}', array(
+    'as' => 'admin.mensajes.show',
+    'uses' => 'MensajesController@show'
+));
+
+Route::get('admin/mensajes/{id}/edit', array(
+    'as' => 'admin.mensajes.edit',
+    'uses' => 'MensajesController@edit'
+));
+
+Route::put('admin/mensajes/{id}', array(
+    'as' => 'admin.mensajes.update',
+    'uses' => 'MensajesController@update'
+));
+
+Route::delete('admin/mensajes/{id}', array(
+    'as' => 'admin.mensajes.destroy',
+    'uses' => 'MensajesController@destroy'
+));
+
+
+/*Route::get('site/contacto', array(
     'as' => 'site.contacto',
     'uses' => 'SiteController@contacto'
 ));
@@ -59,4 +96,4 @@ Route::get('site/contacto', array(
 Route::post('site/process-contacto', array(
     'as' => 'site.process.contacto',
     'uses' => 'SiteController@formularioSite'
-));
+));*/

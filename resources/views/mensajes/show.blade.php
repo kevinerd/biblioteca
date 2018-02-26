@@ -1,0 +1,1 @@
+@extends('layout')@section('contenido')    <h1>Mensajes</h1>    <p><b>Enviado por: </b>{{  $mensaje->nombre  }} {{  $mensaje->apellido  }}</p>    <p><b>Teléfono: </b>{{  $mensaje->telefono  }}</p>    <p><b>Mail: </b>{{  $mensaje->mail  }}</p>    <p><b>Mensaje: </b>{{  $mensaje->mensaje  }}</p>@stop
