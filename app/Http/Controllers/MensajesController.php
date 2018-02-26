@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mensaje;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
@@ -13,9 +14,11 @@ class MensajesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $mensajes = DB::table('contacto')->get();
+
+        Mensaje::all();
+
         return view('mensajes.index', compact('mensajes'));
     }
 
@@ -24,8 +27,7 @@ class MensajesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         return view('mensajes.contacto');
     }
 
@@ -35,18 +37,8 @@ class MensajesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        DB::table('contacto')->insert([
-            "nombre" => $request->input('nombre'),
-            "apellido" => $request->input('apellido'),
-            "telefono" => $request->input('telefono'),
-            "mail" => $request->input('mail'),
-            "mensaje" => $request->input('mensaje'),
-            "created_at" => Carbon::now(),
-            "updated_at" => Carbon::now()
-        ]);
-
+    public function store(Request $request){
+        Mensaje::create($request->all());
         return back()
             ->with('info', 'Tu mensaje ha sido enviado, en breve recibirás una respuesta.');
     }
@@ -57,9 +49,8 @@ class MensajesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $mensaje = DB::table('contacto')->where('id', $id)->first();
+    public function show($id){
+        $mensaje = Mensaje::findOrFail($id);
 
         return view('mensajes.show', compact('mensaje'));
     }
@@ -70,9 +61,8 @@ class MensajesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $mensaje = DB::table('contacto')->where('id', $id)->first();
+    public function edit($id){
+        $mensaje = Mensaje::findOrFail($id);
 
         return view('mensajes.edit', compact('mensaje'));
     }
@@ -84,16 +74,8 @@ class MensajesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $mensaje = DB::table('contacto')->where('id', $id)->update([
-            "nombre" => $request->input('nombre'),
-            "apellido" => $request->input('apellido'),
-            "telefono" => $request->input('telefono'),
-            "mail" => $request->input('mail'),
-            "mensaje" => $request->input('mensaje'),
-            "updated_at" => Carbon::now()
-        ]);
+    public function update(Request $request, $id){
+        Mensaje::findOrFail($id)->update($request->all());
 
         return redirect()->route('mensajes.index');
     }
@@ -104,9 +86,8 @@ class MensajesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        DB::table('contacto')->where('id', $id)->delete();
+    public function destroy($id){
+        Mensaje::findOrFail($id)->delete();
         return redirect()->route('mensajes.index');
     }
 }
