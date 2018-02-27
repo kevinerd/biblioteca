@@ -35,10 +35,15 @@ Route::get('admin/socios', array(
     'uses' => 'SociosController@socios'
 ));
 
-/*Route::any('ingreso/login', array(
+Route::get('ingreso/login', array(
     'as' => 'ingreso.login',
-    'uses' => 'IngresoController@login'
-));*/
+    'uses' => 'Auth\LoginController@login'
+));
+
+Route::post('ingreso/login', array(
+    'as' => 'ingreso.login',
+    'uses' => 'Auth\LoginController@auth'
+));
 
 /*  Rutas del site  */
 Route::get('site/', array(
