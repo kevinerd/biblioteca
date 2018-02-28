@@ -10,6 +10,10 @@ class SiteController extends Controller
         return view('site.index');
     }
 
+    public function admin(){
+        return view('index');
+    }
+
     /*public function contacto(){
         return view('site.contacto');
     }
