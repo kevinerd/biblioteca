@@ -10,32 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::resource('admin/mensajes', 'MensajesController');
+
+Route::resource('admin/autores', 'AutoresController');
+
+Route::resource('admin/informes', 'InformesController');
+
+Route::resource('admin/socios', 'SociosController');
+
+Route::resource('admin/usuarios', 'UsuariosController');
+
+Route::resource('admin/prestamos', 'PrestamosController');
+
+Route::resource('libros', 'LibrosController');
+
 Route::get('admin', array(
     'as' => 'admin',
     'uses' => 'SiteController@admin'
 ));
-
-Route::get('admin/autores', array(
-    'as' => 'admin.autores',
-    'uses' => 'AutoresController@autores'
-));
-
-Route::get('admin/informes', array(
-    'as' => 'admin.informes',
-    'uses' => 'SiteController@informes'
-));
-
-Route::get('admin/prestamos', array(
-    'as' => 'admin.prestamos',
-    'uses' => 'PrestamosController@prestamos'
-));
-
-Route::get('admin/socios', array(
-    'as' => 'admin.socios',
-    'uses' => 'SociosController@socios'
-));
-
-Route::resource('mensajes', 'MensajesController');
 
 Route::get('ingreso/login', array(
     'as' => 'ingreso.login',
@@ -43,7 +36,7 @@ Route::get('ingreso/login', array(
 ));
 
 Route::post('ingreso/login', array(
-    'as' => 'ingreso.login',
+    'as' => 'login',
     'uses' => 'Auth\LoginController@login'
 ));
 
