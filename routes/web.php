@@ -23,7 +23,7 @@ Route::resource('admin/usuarios', 'UsuariosController');
 
 Route::resource('admin/prestamos', 'PrestamosController');
 
-Route::resource('libros', 'LibrosController');
+Route::resource('admin/libros', 'LibrosController');
 
 Route::get('admin', array(
     'as' => 'admin',

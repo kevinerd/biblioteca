@@ -8,6 +8,7 @@ class Prestamo extends Model
 {
     protected $table = 'prestamos';
     protected $fillable = [
-        'fechaPrestamo', 'fechaDevol', 'fechaRealDevol', 'isbn'
+        'fechaPres', 'fechaDevol', 'fechaRealDevol',
+        'isbn', 'documento'
     ];
 }
