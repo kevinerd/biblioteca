@@ -7,17 +7,18 @@ use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
 
-class MensajesController extends Controller
-{
+class MensajesController extends Controller{
+    public function __construct(){
+        $this->middleware('auth')->except(MensajesController::create());
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $mensajes = DB::table('contacto')->get();
-
-        Mensaje::all();
+        $mensajes = Mensaje::all();
 
         return view('mensajes.index', compact('mensajes'));
     }
