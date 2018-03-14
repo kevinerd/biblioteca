@@ -18,9 +18,7 @@ class MensajesController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $mensajes = DB::table('contacto')->get();
-
-        Mensaje::all();
+        $mensajes = Mensaje::all();
 
         return view('mensajes.index', compact('mensajes'));
     }
