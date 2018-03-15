@@ -44,7 +44,8 @@ class SociosController extends Controller
     }
 
     public function destroy($id){
-        Socio::findOrFail($id)->destroy();
+        Socio::findOrFail($id)->delete();
+
         return redirect()->route('socios.index');
     }
 
