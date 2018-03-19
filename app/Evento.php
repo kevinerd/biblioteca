@@ -8,8 +8,7 @@ class Evento extends Model
 {
     protected $table = 'eventos';
     protected $fillable = [
-        'nombre', 'fecha', 'hora', 'invitados',
-        'descripción', 'thumb_banner', 'thumb_afiche',
-        'id_categoria'
+        'nombre', 'fecha', 'hora', 'id_categoria', 'invitados',
+        'descripcion', 'thumb_banner', 'thumb_afiche'
     ];
 }
