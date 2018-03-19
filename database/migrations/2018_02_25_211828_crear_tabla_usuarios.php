@@ -21,7 +21,7 @@ class CrearTablaUsuarios extends Migration
                 $table->increments('id');
                 $table->string('nombre');
                 $table->string('apellido');
-                $table->string('mail')->unique();
+                $table->string('mail');
                 $table->string('usuario');
                 $table->string('clave');
                 $table->rememberToken();
