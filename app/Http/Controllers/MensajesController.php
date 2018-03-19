@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class MensajesController extends Controller{
     public function __construct(){
-        $this->middleware('auth')->except(MensajesController::create());
+        //$this->middleware('auth')->except(MensajesController::create());
     }
 
     /**
