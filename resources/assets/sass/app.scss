@@ -17,6 +17,24 @@ body{
   background-color: #d2d2d2b3;
 }
 
+.footer-b{
+  display: block;
+  width: 100%;
+  background-color: #478781;
+  text-align: center;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0;
+  padding: auto;
+}
+
+.footer-b p{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-weight: bold;
+}
+
 .error{
   color:#ff0000;
   font-size: 12px;

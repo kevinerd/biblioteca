@@ -25,6 +25,12 @@ Route::resource('admin/prestamos', 'PrestamosController');
 
 Route::resource('admin/libros', 'LibrosController');
 
+Route::resource('admin/eventos', 'EventosController');
+
+Route::resource('admin/categorias', 'CategoriasController');
+
+Route::resource('admin/grupos', 'GruposController');
+
 Route::get('admin', array(
     'as' => 'admin',
     'uses' => 'SiteController@admin'
