@@ -32,7 +32,9 @@ class CategoriasController extends Controller
     public function edit($id){
         $categoria = Categoria::findOrFail($id);
 
-        return view('categorias.edit', compact('categoria'));
+        $grupos = DB::table('grupos_categorias')->get(['id', 'nombre']);
+
+        return view('categorias.edit', compact('categoria', 'grupos'));
     }
 
     public function update(Request $request, $id){
