@@ -29,6 +29,8 @@ Route::resource('admin/eventos', 'EventosController');
 
 Route::resource('admin/categorias', 'CategoriasController');
 
+Route::resource('admin/grupos', 'GruposController');
+
 Route::get('admin', array(
     'as' => 'admin',
     'uses' => 'SiteController@admin'
