@@ -35,7 +35,14 @@ body{
   font-weight: bold;
 }
 
-.error{
-  color:#ff0000;
-  font-size: 12px;
+.errors{
+  color: #c10600;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.alert-success{
+  color: #194b1f;
+  background-color: #57d14a;
+  border-color: #33b951;
 }

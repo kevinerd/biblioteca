@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateLibroRequest;
 use App\Libro;
 use DB;
 
@@ -18,13 +18,15 @@ class LibrosController extends Controller {
     public function create(){
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
 
-        return view('libros.create', compact('autores'));
+        $categorias = DB::table('categorias')->where('id_grupo', '1')->get();
+
+        return view('libros.create', compact('autores', 'categorias'));
     }
 
-    public function store(Request $request){
+    public function store(CreateLibroRequest $request){
         Libro::create($request->all());
-        return back()
-            ->with('info', 'Libro cargado correctamente.');
+
+        return redirect()->route('libros.index')->with('info', 'Libro cargado correctamente.');
     }
 
     public function show($id){
@@ -38,24 +40,27 @@ class LibrosController extends Controller {
     public function edit($id){
         $libro = Libro::findOrFail($id);
 
+        $categorias = DB::table('categorias')->where('id_grupo', '1')->get();
+
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
 
-        return view('libros.edit', compact('libro', 'autores'));
+        return view('libros.edit', compact('libro', 'autores', 'categorias'));
     }
 
-    public function update(Request $request, $id){
+    public function update(CreateLibroRequest $request, $id){
         Libro::findOrFail($id)->update($request->all());
 
-        return redirect()->route('libros.index');
+        return redirect()->route('libros.index')->with('info', 'Libro modificado correctamente.');
     }
 
     public function destroy($id){
         Libro::findOrFail($id)->delete();
+
         return redirect()->route('libros.index');
     }
 
-    public function getAutorId($id){
+    /*public function getAutorId($id){
         $sql = "SELECT nombre, apellido FROM autores INNER JOIN libros ON libros.idAutor = autores.id WHERE autores.id = $id";
         return $sql;
-    }
+    }*/
 }

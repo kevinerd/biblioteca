@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateCategoriaRequest;
 use DB;
 use App\Categoria;
 
-class CategoriasController extends Controller
-{
+class CategoriasController extends Controller{
     public function index(){
         $grupos = DB::table('grupos_categorias')->get();
 
@@ -24,9 +23,10 @@ class CategoriasController extends Controller
         return view('categorias.create', compact('grupos'));
     }
 
-    public function store(Request $request){
+    public function store(CreateCategoriaRequest $request){
         Categoria::create($request->all());
-        return back()->with('info', 'Categoría creada correctamente.');
+
+        return redirect()->route('categorias.index')->with('info', 'Categoría creada correctamente.');
     }
 
     public function edit($id){
@@ -37,15 +37,15 @@ class CategoriasController extends Controller
         return view('categorias.edit', compact('categoria', 'grupos'));
     }
 
-    public function update(Request $request, $id){
+    public function update(CreateCategoriaRequest $request, $id){
         Categoria::findOrFail($id)->update($request->all());
 
-        return redirect()->route('categorias.index');
+        return redirect()->route('categorias.index')->with('info', 'Categoría creada correctamente.');
     }
 
     public function destroy($id){
         Categoria::findOrFail($id)->delete();
 
-        return redirect()->route('categorias.index');
+        return redirect()->route('categorias.index')->with('info', 'Autor eliminado correctamente.');
     }
 }
