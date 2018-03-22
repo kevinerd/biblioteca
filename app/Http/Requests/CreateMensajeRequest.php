@@ -13,6 +13,9 @@ class CreateMensajeRequest extends FormRequest{
         return [
             'nombre' => 'required',
             'apellido' => 'required',
+            'telefono' => 'required',
+            'mail' => 'required',
+            'mensaje' => 'required'
         ];
     }
 }
