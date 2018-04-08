@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Categoria;
+use App\Http\Requests\CreateSocioRequest;
 use App\Socio;
 use DB;
 
-class SociosController extends Controller
-{
+class SociosController extends Controller{
     public function index(){
         $socios= DB::table('socios')->get();
 
@@ -17,12 +17,15 @@ class SociosController extends Controller
     }
 
     public function create(){
-        return view('socios.create');
+        $categorias = DB::table('categorias')->where('id_grupo', '2')->get();
+
+        return view('socios.create', compact('categorias'));
     }
 
-    public function store(Request $request){
+    public function store(CreateSocioRequest $request){
         Socio::create($request->all());
-        return back()->with('info', 'Socio registrado correctamente.');
+
+        return redirect()->route('socios.index')->with('info', 'Socio registrado correctamente.');
     }
 
     public function show($id){
@@ -34,10 +37,12 @@ class SociosController extends Controller
     public function edit($id){
         $socio = Socio::findOrFail($id);
 
-        return view('socios.edit', compact('socio'));
+        $categorias = Categoria::pluck('nombre', 'id');
+
+        return view('socios.edit', compact('socio', 'categorias'));
     }
 
-    public function update(Request $request, $id){
+    public function update(CreateSocioRequest $request, $id){
         Socio::findOrFail($id)->update($request->all());
 
         return redirect()->route('socios.index')->with('info', 'Socio modificado correctamente.');

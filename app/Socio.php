@@ -9,6 +9,7 @@ class Socio extends Model
     protected $table = 'socios';
     protected $fillable = [
         'nombre', 'apellido', 'documento',
-        'domicilio', 'telefono', 'mail', 'fechaNac'
+        'domicilio', 'telefono', 'mail',
+        'fechaNac', 'tipo_socio'
     ];
 }
