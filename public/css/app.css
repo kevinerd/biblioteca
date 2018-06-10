@@ -10034,3 +10034,19 @@ body {
   border-color: #33b951;
 }
 
+.banner {
+  width: 750px;
+  height: 400px;
+}
+
+.card {
+  display: inline-block !important;
+  position: relative !important;
+  margin: 5px !important;
+}
+
+.tarjeta {
+  width: 150px !important;
+  height: 250px !important;
+}
+
