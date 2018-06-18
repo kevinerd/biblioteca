@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidateForm;
+use Illuminate\Support\Facades\DB;
+use App\Libro;
 
 class SiteController extends Controller
 {
     public function home(){
-        return view('site.index');
+        $libros = DB::table('libros')->get();
+
+        Libro::all();
+
+        return view('site.index', compact('libros'));
     }
 
     public function admin(){
