@@ -1,1 +1,1 @@
-<?php/** * Created by PhpStorm. * User: Kevin Firmani * Date: 12/6/2018 * Time: 16:11 */
+@extends('layouts.layout')@section('contenido')@endsection

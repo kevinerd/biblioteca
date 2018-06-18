@@ -1,1 +1,1 @@
-<?php/** * Created by PhpStorm. * User: Kevin Firmani * Date: 13/6/2018 * Time: 10:27 */
+<?phpecho 'admin';
