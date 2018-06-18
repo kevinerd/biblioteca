@@ -11,8 +11,12 @@ class LibrosController extends Controller {
         $libros = DB::table('libros')->get();
 
         Libro::all();
-
-        return view('libros.index', compact('libros'));
+        if(isset($_SESSION['usuario'])){
+            return view('libros.index_admin', compact('libros'));
+        }
+        else{
+            return view('libros.index', compact('libros'));
+        }
     }
 
     public function create(){

@@ -84,12 +84,38 @@ Route::post('password/reset', array(
 Route::get('/home', 'HomeController@index')->name('home');
 
 /*  Rutas del site  */
-Route::get('/', array(
+Route::get('site/', array(
     'as' => 'site.home',
     'uses' => 'SiteController@home'
 ));
 
 Route::get('site/libros', array(
     'as' => 'site.libros',
-    'uses' => 'LibrosController@libros'
+    'uses' => 'LibrosController@index'
 ));
+
+Route::get('site/historia', array(
+    'as' => 'site.historia',
+    'uses' => 'HistoriaController@historia'
+));
+
+Route::get('site/contacto', array(
+    'as' => 'site.contacto',
+    'uses' => 'MensajesController@create'
+));
+
+Route::get('site/autores', array(
+    'as' => 'site.autores',
+    'uses' => 'AutoresController@index'
+));
+
+Route::get('site/talleres', array(
+    'as' => 'site.talleres',
+    'uses' => 'TalleresController@index'
+));
+
+Route::get('site/eventos', array(
+    'as' => 'site.eventos',
+    'uses' => 'EventosController@index'
+));
+
