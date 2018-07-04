@@ -63,6 +63,14 @@ class LibrosController extends Controller {
         return redirect()->route('libros.index');
     }
 
+    public function site(){
+        $libros = DB::table('libros')->get();
+
+        Libro::all();
+
+        return view('site.libros', compact('libros'));
+    }
+
     /*public function getAutorId($id){
         $sql = "SELECT nombre, apellido FROM autores INNER JOIN libros ON libros.idAutor = autores.id WHERE autores.id = $id";
         return $sql;
