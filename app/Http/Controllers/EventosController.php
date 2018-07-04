@@ -52,4 +52,12 @@ class EventosController extends Controller{
 
         return redirect()->route('eventos.index')->with('info', 'Evento eliminado correctamente.');
     }
+
+    public function site(){
+        $eventos = DB::table('eventos')->get();
+
+        Evento::all();
+
+        return view('site.eventos', compact('eventos'));
+    }
 }

@@ -91,7 +91,7 @@ Route::get('site/', array(
 
 Route::get('site/libros', array(
     'as' => 'site.libros',
-    'uses' => 'LibrosController@index'
+    'uses' => 'LibrosController@site'
 ));
 
 Route::get('site/historia', array(
@@ -116,6 +116,6 @@ Route::get('site/talleres', array(
 
 Route::get('site/eventos', array(
     'as' => 'site.eventos',
-    'uses' => 'EventosController@index'
+    'uses' => 'EventosController@site'
 ));
 
