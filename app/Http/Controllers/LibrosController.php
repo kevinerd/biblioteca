@@ -29,16 +29,18 @@ class LibrosController extends Controller {
 
     public function store(CreateLibroRequest $request){
         Libro::create($request->all());
-
+        $request->file('portada')->store('libros');
         return redirect()->route('libros.index')->with('info', 'Libro cargado correctamente.');
     }
 
     public function show($id){
-        $libro = Libro::findOrFail($id);
+        $libro = DB::table('libros')
+            ->select('libros.*', 'autores.nombre', 'autores.apellido')
+            ->join('autores', 'libros.idAutor', '=', 'autores.id')
+            ->where('libros.id', '=', $id)->get();
+        /*$libro = Libro::findOrFail($id)->join()->get();*/
 
-        $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
-
-        return view('libros.show', compact('libro', 'autores'));
+        return view('libros.show', compact('libro'));
     }
 
     public function edit($id){
@@ -71,8 +73,12 @@ class LibrosController extends Controller {
         return view('site.libros', compact('libros'));
     }
 
-    /*public function getAutorId($id){
-        $sql = "SELECT nombre, apellido FROM autores INNER JOIN libros ON libros.idAutor = autores.id WHERE autores.id = $id";
-        return $sql;
-    }*/
+    public function siteShow($id){
+        $libro = DB::table('libros')
+            ->select('libros.*', 'autores.nombre', 'autores.apellido')
+            ->join('autores', 'libros.idAutor', '=', 'autores.id')
+            ->where('libros.id', '=', $id)->get();
+
+        return view('site.libro', compact('libro'));
+    }
 }
