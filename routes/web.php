@@ -11,6 +11,7 @@
 |
 */
 
+/* Rutas de administración */
 Route::resource('admin/mensajes', 'MensajesController');
 
 Route::resource('admin/autores', 'AutoresController');
@@ -36,13 +37,77 @@ Route::get('admin', array(
     'uses' => 'SiteController@admin'
 ));
 
+/*  Rutas del site  */
+Route::get('site/', array(
+    'as' => 'site.home',
+    'uses' => 'SiteController@home'
+));
+
+Route::get('site/libros', array(
+    'as' => 'site.libros',
+    'uses' => 'LibrosController@site'
+));
+
+Route::get('site/libro/{id}', array(
+    'as' => 'site.libro',
+    'uses' => 'LibrosController@siteShow'
+));
+
+Route::get('site/historia', array(
+    'as' => 'site.historia',
+    'uses' => 'SiteController@historia'
+));
+
+Route::get('site/contacto', array(
+    'as' => 'site.contacto',
+    'uses' => 'MensajesController@create'
+));
+
+Route::get('site/autores', array(
+    'as' => 'site.autores',
+    'uses' => 'AutoresController@site'
+));
+
+Route::get('site/autor/{id}', array(
+    'as' => 'site.autor',
+    'uses' => 'AutoresController@siteShow'
+));
+
+Route::get('site/talleres', array(
+    'as' => 'site.talleres',
+    'uses' => 'TalleresController@index'
+));
+
+Route::get('site/eventos', array(
+    'as' => 'site.eventos',
+    'uses' => 'EventosController@site'
+));
+
+/* Rutas de login, registro y password */
+
+
+
+Route::get('test', function(){
+    $user = new App\User;
+    $user->nombre = 'Kevin';
+    $user->apellido = 'Firmani';
+    $user->email = 'kevinjf2011@gmail.com';
+    $user->password = bcrypt('123123');
+    $user->save();
+
+    return $user;
+});
+
+
+
+
 Route::get('ingreso/login', array(
     'as' => 'ingreso.login',
     'uses' => 'Auth\LoginController@showLoginForm'
 ));
 
 Route::post('ingreso/login', array(
-    'as' => 'login',
+    'as' => 'ingreso.login',
     'uses' => 'Auth\LoginController@login'
 ));
 
@@ -80,42 +145,3 @@ Route::post('password/reset', array(
     'as' => 'password.reset',
     'uses' => 'Auth\ResetPasswordController@reset'
 ));
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-/*  Rutas del site  */
-Route::get('site/', array(
-    'as' => 'site.home',
-    'uses' => 'SiteController@home'
-));
-
-Route::get('site/libros', array(
-    'as' => 'site.libros',
-    'uses' => 'LibrosController@site'
-));
-
-Route::get('site/historia', array(
-    'as' => 'site.historia',
-    'uses' => 'HistoriaController@historia'
-));
-
-Route::get('site/contacto', array(
-    'as' => 'site.contacto',
-    'uses' => 'MensajesController@create'
-));
-
-Route::get('site/autores', array(
-    'as' => 'site.autores',
-    'uses' => 'AutoresController@index'
-));
-
-Route::get('site/talleres', array(
-    'as' => 'site.talleres',
-    'uses' => 'TalleresController@index'
-));
-
-Route::get('site/eventos', array(
-    'as' => 'site.eventos',
-    'uses' => 'EventosController@site'
-));
-
