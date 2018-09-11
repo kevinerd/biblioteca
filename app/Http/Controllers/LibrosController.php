@@ -21,22 +21,21 @@ class LibrosController extends Controller {
 
     public function create(){
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
+        $grupos = DB::table('grupos_libros')->get();
 
-        $categorias = DB::table('categorias')->where('id_grupo', '1')->get();
-
-        return view('libros.create', compact('autores', 'categorias'));
+        return view('libros.create', compact('autores', 'grupos'));
     }
 
     public function store(CreateLibroRequest $request){
         Libro::create($request->all());
-        $request->file('portada')->store('libros');
+        /*$request->file('portada')->store('libros');*/
         return redirect()->route('libros.index')->with('info', 'Libro cargado correctamente.');
     }
 
     public function show($id){
         $libro = DB::table('libros')
             ->select('libros.*', 'autores.nombre', 'autores.apellido')
-            ->join('autores', 'libros.idAutor', '=', 'autores.id')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
             ->where('libros.id', '=', $id)->get();
         /*$libro = Libro::findOrFail($id)->join()->get();*/
 
@@ -46,11 +45,9 @@ class LibrosController extends Controller {
     public function edit($id){
         $libro = Libro::findOrFail($id);
 
-        $categorias = DB::table('categorias')->where('id_grupo', '1')->get();
-
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
 
-        return view('libros.edit', compact('libro', 'autores', 'categorias'));
+        return view('libros.edit', compact('libro', 'autores'));
     }
 
     public function update(CreateLibroRequest $request, $id){
@@ -76,7 +73,7 @@ class LibrosController extends Controller {
     public function siteShow($id){
         $libro = DB::table('libros')
             ->select('libros.*', 'autores.nombre', 'autores.apellido')
-            ->join('autores', 'libros.idAutor', '=', 'autores.id')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
             ->where('libros.id', '=', $id)->get();
 
         return view('site.libro', compact('libro'));

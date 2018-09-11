@@ -22,7 +22,7 @@ class CrearTablaEventos extends Migration
             $table->text('descripcion');
             $table->string('thumb_banner');
             $table->string('thumb_afiche');
-            $table->integer('id_categoria');
+            $table->integer('id_grupo');
             $table->timestamps();
         });
     }

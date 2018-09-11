@@ -22,6 +22,7 @@ class CrearTablaSocios extends Migration
             $table->string('telefono');
             $table->string('mail');
             $table->string('fechaNac');
+            $table->integer('id_grupo');
             $table->timestamps();
         });
     }

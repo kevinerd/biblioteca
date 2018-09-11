@@ -4,16 +4,14 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaGruposCategorias extends Migration
-{
+class CrearTablaGruposTalleres extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('grupos_categorias', function (Blueprint $table) {
+    public function up() {
+        Schema::create('grupos_talleres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->timestamps();
@@ -25,8 +23,7 @@ class CrearTablaGruposCategorias extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('grupos_categorias');
+    public function down() {
+        Schema::dropIfExists('grupos_talleres');
     }
 }

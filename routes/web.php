@@ -28,9 +28,15 @@ Route::resource('admin/libros', 'LibrosController');
 
 Route::resource('admin/eventos', 'EventosController');
 
-Route::resource('admin/categorias', 'CategoriasController');
+Route::resource('admin/talleres', 'TalleresController');
 
-Route::resource('admin/grupos', 'GruposController');
+Route::resource('admin/grupos_libros', 'GruposLibrosController');
+
+Route::resource('admin/grupos_autores', 'GruposAutoresController');
+
+Route::resource('admin/grupos_eventos', 'GruposEventosController');
+
+Route::resource('admin/grupos_talleres', 'GruposTalleresController');
 
 Route::get('admin', array(
     'as' => 'admin',
@@ -78,6 +84,11 @@ Route::get('site/talleres', array(
     'uses' => 'TalleresController@index'
 ));
 
+Route::get('site/taller/{id}', array(
+    'as' => 'site.taller',
+    'uses' => 'TalleresController@siteShow'
+));
+
 Route::get('site/eventos', array(
     'as' => 'site.eventos',
     'uses' => 'EventosController@site'
@@ -86,7 +97,7 @@ Route::get('site/eventos', array(
 /* Rutas de login, registro y password */
 
 
-
+/*
 Route::get('test', function(){
     $user = new App\User;
     $user->nombre = 'Kevin';
@@ -144,4 +155,6 @@ Route::get('password/reset/{token}', array(
 Route::post('password/reset', array(
     'as' => 'password.reset',
     'uses' => 'Auth\ResetPasswordController@reset'
-));
+));*/
+
+Route::get('/home', 'HomeController@index')->name('home');

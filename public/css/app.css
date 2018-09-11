@@ -10135,3 +10135,7 @@ carousel img {
   margin: 10px !important;
 }
 
+.dropdown-menu {
+  width: 215px !important;
+}
+

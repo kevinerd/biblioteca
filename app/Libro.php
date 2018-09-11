@@ -9,6 +9,7 @@ class Libro extends Model
     protected $table = 'libros';
     protected $fillable = [
         'isbn', 'titulo', 'sipnosis', 'paginas',
-        'idAutor', 'edicion', 'portada'
+        'id_autor', 'edicion', 'thumb', 'id_grupo',
+        'destacado', 'semanal'
     ];
 }

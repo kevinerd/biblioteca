@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Grupo extends Model
-{
-    protected $table = 'grupos_categorias';
+class GruposLibros extends Model {
+    protected $table = 'grupos_libros';
     protected $fillable = [
         'nombre'
     ];

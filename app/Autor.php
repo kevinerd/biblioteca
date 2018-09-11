@@ -8,7 +8,7 @@ class Autor extends Model
 {
     protected $table = 'autores';
     protected $fillable = [
-        'nombre', 'apellido', 'nacimiento',
-        'fallecimiento', 'biografia', 'thumb'
+        'nombre', 'apellido',
+        'thumb', 'id_grupo'
     ];
 }

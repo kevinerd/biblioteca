@@ -15,13 +15,16 @@ class CrearTablaLibros extends Migration
     {
         Schema::create('libros', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('isbn');
+            $table->string('isbn')->nullable();
             $table->string('titulo');
-            $table->text('sipnosis');
+            $table->text('sipnosis')->nullable();
             $table->smallInteger('paginas');
             $table->integer('idAutor');
             $table->smallInteger('edicion');
             $table->string('thumb');
+            $table->integer('id_grupo');
+            $table->boolean('destacado');
+            $table->boolean('semanal');
             $table->timestamps();
         });
     }
