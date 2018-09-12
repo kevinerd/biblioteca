@@ -15,8 +15,8 @@ class CreateEventosRequest extends FormRequest{
         return [
             'nombre' => 'required',
             'fecha' => 'required',
-            'hora' => 'required',
-            'descripcion' => 'required'
+            'descripcion' => 'required',
+            'id_grupo' => 'required'
         ];
     }
 }

@@ -16,9 +16,9 @@ class EventosController extends Controller{
     }
 
     public function create(){
-        $categorias = DB::table('categorias')->where('id_grupo', '5')->get();
+        $grupos = DB::table('grupos_eventos')->get();
 
-        return view('eventos.create', compact('categorias'));
+        return view('eventos.create', compact('grupos'));
     }
 
     public function store(CreateEventosRequest $request){
@@ -30,9 +30,11 @@ class EventosController extends Controller{
     public function edit($id){
         $evento = Evento::findOrFail($id);
 
-        $categorias = DB::table('categorias')->where('id_grupo', '5')->get();
+        $grupos = DB::table('grupos_eventos')->get();
 
-        return view('eventos.edit', compact('evento', 'categorias'));
+        /*$evento->fecha = implode( '/', array_reverse( explode( '-', $evento->fecha ) ) ) ;*/
+
+        return view('eventos.edit', compact('evento', 'grupos'));
     }
 
     public function update(CreateEventosRequest $request, $id){
@@ -59,5 +61,12 @@ class EventosController extends Controller{
         Evento::all();
 
         return view('site.eventos', compact('eventos'));
+    }
+
+    public function siteShow($id){
+        $evento = DB::table('eventos')
+            ->where('eventos.id', '=', $id)->get();
+
+        return view('site.evento', compact('evento'));
     }
 }

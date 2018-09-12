@@ -15,7 +15,6 @@ class CreateLibroRequest extends FormRequest{
             'titulo' => 'required',
             'paginas' => 'required',
             'edicion' => 'required',
-            'cantidad' => 'required'
         ];
     }
 }

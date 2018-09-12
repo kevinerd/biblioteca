@@ -47,7 +47,9 @@ class LibrosController extends Controller {
 
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
 
-        return view('libros.edit', compact('libro', 'autores'));
+        $grupos = DB::table('grupos_libros')->get();
+
+        return view('libros.edit', compact('libro', 'autores', 'grupos'));
     }
 
     public function update(CreateLibroRequest $request, $id){
