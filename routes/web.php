@@ -79,7 +79,7 @@ Route::get('site/autor/{id}', array(
     'uses' => 'AutoresController@siteShow'
 ));
 
-Route::get('site/talleres', array(
+/*Route::get('site/talleres', array(
     'as' => 'site.talleres',
     'uses' => 'TalleresController@index'
 ));
@@ -87,11 +87,16 @@ Route::get('site/talleres', array(
 Route::get('site/taller/{id}', array(
     'as' => 'site.taller',
     'uses' => 'TalleresController@siteShow'
-));
+));*/
 
 Route::get('site/eventos', array(
     'as' => 'site.eventos',
     'uses' => 'EventosController@site'
+));
+
+Route::get('site/eventos/{id}', array(
+    'as' => 'site.evento',
+    'uses' => 'EventosController@siteShow'
 ));
 
 /* Rutas de login, registro y password */

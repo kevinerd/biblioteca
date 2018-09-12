@@ -17,11 +17,10 @@ class CrearTablaEventos extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('fecha');
-            $table->string('hora');
-            $table->string('invitados');
+            $table->string('hora')->nullable();
+            $table->string('invitados')->nullable();
             $table->text('descripcion');
-            $table->string('thumb_banner');
-            $table->string('thumb_afiche');
+            $table->string('thumb')->nullable();
             $table->integer('id_grupo');
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ class CrearTablaEventos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('eventos');
     }
 }
