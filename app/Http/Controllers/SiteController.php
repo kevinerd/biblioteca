@@ -14,11 +14,9 @@ class SiteController extends Controller
         $libros = DB::table('libros')
             ->where('destacado', '=', '1')->get();
         $libroSem = DB::table('libros')
-            ->join('autores', 'libros.id_autor', '=', 'autores.id')
             ->where('libros.semanal', '=', '1')->get();
         $eventos = DB::table('eventos')->get();
         Evento::all();
-        Autor::all();
         Libro::all();
 
         return view('site.index', compact('libros', 'eventos', 'libroSem'));
