@@ -15,9 +15,8 @@ class CreateSocioRequest extends FormRequest{
             'apellido' => 'required',
             'documento' => 'required',
             'domicilio' => 'required',
-            'telefono' => 'required',
-            'fechaNac' => 'required',
-            'tipo_socio' => 'required'
+            'fecha_nac' => 'required',
+            'id_grupo' => 'required'
         ];
     }
 }

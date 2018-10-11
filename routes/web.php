@@ -102,43 +102,44 @@ Route::get('site/eventos/{id}', array(
 /* Rutas de login, registro y password */
 
 
-/*
-Route::get('test', function(){
+
+/*Route::get('test', function(){
     $user = new App\User;
-    $user->nombre = 'Kevin';
-    $user->apellido = 'Firmani';
+    $user->name = 'Kevin';
     $user->email = 'kevinjf2011@gmail.com';
     $user->password = bcrypt('123123');
     $user->save();
 
     return $user;
-});
+});*/
 
 
 
 
-Route::get('ingreso/login', array(
-    'as' => 'ingreso.login',
+Route::get('login', array(
+    'as' => 'login',
     'uses' => 'Auth\LoginController@showLoginForm'
 ));
+
+
 
 Route::post('ingreso/login', array(
     'as' => 'ingreso.login',
     'uses' => 'Auth\LoginController@login'
 ));
 
-Route::post('sesion/logout', array(
-    'as' => 'sesion.logout',
+Route::post('logout', array(
+    'as' => 'logout',
     'uses' => 'Auth\LoginController@logout'
 ));
 
-Route::get('registro', array(
-    'as' => 'registro',
+Route::get('register', array(
+    'as' => 'register',
     'uses' => 'Auth\RegisterController@showRegistrationForm'
 ));
 
-Route::post('registro', array(
-    'as' => 'registro',
+Route::post('register', array(
+    'as' => 'register',
     'uses' => 'Auth\RegisterController@register'
 ));
 
@@ -147,6 +148,7 @@ Route::get('password/reset', array(
     'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
 ));
 
+/*
 Route::post('password/email', array(
     'as' => 'password.email',
     'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'

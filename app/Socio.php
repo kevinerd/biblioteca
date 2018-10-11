@@ -10,6 +10,6 @@ class Socio extends Model
     protected $fillable = [
         'nombre', 'apellido', 'documento',
         'domicilio', 'telefono', 'mail',
-        'fechaNac', 'tipo_socio'
+        'fecha_nac', 'id_grupo'
     ];
 }

@@ -13,11 +13,12 @@ class CrearTablaAutores extends Migration
      */
     public function up() {
         Schema::create('autores', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('thumb');
+            $table->string('thumb')->nullable();
             $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_autores');
             $table->timestamps();
         });
     }

@@ -12,13 +12,14 @@ class CrearTablaTalleres extends Migration {
      */
     public function up() {
         Schema::create('talleres', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
             $table->string('descripción');
             $table->string('horario');
-            $table->string('fecha');
-            $table->string('thumb');
+            $table->date('fecha');
+            $table->string('thumb')->nullable();
             $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_talleres');
             $table->timestamps();
         });
     }

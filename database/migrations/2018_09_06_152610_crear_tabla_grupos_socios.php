@@ -12,7 +12,7 @@ class CrearTablaGruposSocios extends Migration {
      */
     public function up() {
         Schema::create('grupos_socios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
             $table->timestamps();
         });

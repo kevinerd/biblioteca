@@ -14,15 +14,16 @@ class CrearTablaSocios extends Migration
     public function up()
     {
         Schema::create('socios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();;
             $table->string('nombre');
             $table->string('apellido');
             $table->integer('documento');
             $table->string('domicilio');
-            $table->string('telefono');
-            $table->string('mail');
-            $table->string('fechaNac');
+            $table->string('telefono')->nullable();
+            $table->string('mail')->nullable();
+            $table->string('fecha_nac');
             $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_socios');
             $table->timestamps();
         });
     }

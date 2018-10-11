@@ -14,15 +14,17 @@ class CrearTablaLibros extends Migration
     public function up()
     {
         Schema::create('libros', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('isbn')->nullable();
             $table->string('titulo');
             $table->text('sipnosis')->nullable();
             $table->smallInteger('paginas');
-            $table->integer('idAutor');
+            $table->integer('id_autor');
+            $table->foreign('id_autor')->references('id')->on('autores');
             $table->smallInteger('edicion');
-            $table->string('thumb');
+            $table->string('thumb')->nullable();
             $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_libros');
             $table->boolean('destacado');
             $table->boolean('semanal');
             $table->timestamps();

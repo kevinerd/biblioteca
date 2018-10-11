@@ -17,7 +17,7 @@ class SociosController extends Controller{
     }
 
     public function create(){
-        $categorias = DB::table('categorias')->where('id_grupo', '2')->get();
+        $categorias = DB::table('grupos_socios')->get();
 
         return view('socios.create', compact('categorias'));
     }

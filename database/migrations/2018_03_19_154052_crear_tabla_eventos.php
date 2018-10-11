@@ -14,14 +14,14 @@ class CrearTablaEventos extends Migration
     public function up()
     {
         Schema::create('eventos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
-            $table->string('fecha');
-            $table->string('hora')->nullable();
-            $table->string('invitados')->nullable();
+            $table->date('fecha');
+            $table->time('hora')->nullable();
             $table->text('descripcion');
             $table->string('thumb')->nullable();
             $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_eventos');
             $table->timestamps();
         });
     }
