@@ -87,7 +87,7 @@ class LibrosController extends Controller {
             ->where('libros.id', '=', $id)->get();
 
         $autor = DB::table('autores')
-            ->select('autores.nombre', 'autores.apellido', 'autores.thumb')
+            ->select('autores.id', 'autores.nombre', 'autores.apellido', 'autores.thumb')
             ->join('libros', 'autores.id', '=', 'libros.id_autor')
             ->where('libros.id', '=', $id)->get();
 

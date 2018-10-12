@@ -38,6 +38,8 @@ Route::resource('admin/grupos_eventos', 'GruposEventosController');
 
 Route::resource('admin/grupos_talleres', 'GruposTalleresController');
 
+Route::resource('admin/grupos_socios', 'GruposSociosController');
+
 Route::get('admin', array(
     'as' => 'admin',
     'uses' => 'SiteController@admin'
