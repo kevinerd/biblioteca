@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Taller;
+use App\Http\Requests\CreateTalleresRequest;
+use DB;
 
 class TalleresController extends Controller {
     public function index() {
