@@ -17,8 +17,9 @@ class TalleresController extends Controller {
 
     public function create() {
         $talleres = DB::table('talleres')->get();
+        $grupos = DB::table('grupos_talleres')->get();
 
-        return view('talleres.create', compact('talleres'));
+        return view('talleres.create', compact('talleres', 'grupos'));
     }
 
     public function store(CreateTalleresRequest $request) {
