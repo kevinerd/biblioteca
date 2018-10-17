@@ -21,6 +21,7 @@ class CrearTablaContacto extends Migration
             $table->string('mail');
             $table->string('mensaje');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

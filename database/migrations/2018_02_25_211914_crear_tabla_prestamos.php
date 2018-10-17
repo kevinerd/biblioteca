@@ -25,6 +25,7 @@ class CrearTablaPrestamos extends Migration
             $table->boolean('devuelto');
             $table->boolean('aviso');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

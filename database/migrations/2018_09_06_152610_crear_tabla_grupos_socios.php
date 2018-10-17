@@ -15,6 +15,7 @@ class CrearTablaGruposSocios extends Migration {
             $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

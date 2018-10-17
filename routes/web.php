@@ -20,7 +20,12 @@ Route::resource('admin/informes', 'InformesController');
 
 Route::resource('admin/socios', 'SociosController');
 
-Route::resource('admin/usuarios', 'UsuariosController');
+Route::resource('admin/usuarios', 'UserController', ['except'=>['create', 'edit']]);
+
+Route::get('user/verify/{token}', array(
+    'as' => 'user.verify',
+    'uses' => 'UserController@verify'
+));
 
 Route::resource('admin/prestamos', 'PrestamosController');
 

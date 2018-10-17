@@ -28,6 +28,7 @@ class CrearTablaLibros extends Migration
             $table->boolean('destacado');
             $table->boolean('semanal');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

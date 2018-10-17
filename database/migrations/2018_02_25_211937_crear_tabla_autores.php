@@ -20,6 +20,7 @@ class CrearTablaAutores extends Migration
             $table->integer('id_grupo');
             $table->foreign('id_grupo')->references('id')->on('grupos_autores');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
