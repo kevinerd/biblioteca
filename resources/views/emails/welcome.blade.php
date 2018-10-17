@@ -1,1 +1,1 @@
-<?php/** * Created by PhpStorm. * User: Kevin Firmani * Date: 17/10/2018 * Time: 10:04 */
+Hola {{  $user->name  }}Gracias por registrarte. Por favor verifica tu cuenta usando el siguiente link:{{  route('user.verify', $user->verification_token)  }}
