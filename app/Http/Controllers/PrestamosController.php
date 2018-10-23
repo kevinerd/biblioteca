@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePrestamoRequest;
+use App\Socio;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Prestamo;
+use App\Libro;
 use DB;
 
 class PrestamosController extends Controller {
@@ -24,8 +26,14 @@ class PrestamosController extends Controller {
     }
 
     public function create(){
-        $libros = DB::table('libros')->get(['id', 'titulo', 'id_autor']);
-        $socios = DB::table('socios')->get(['id', 'nombre', 'apellido', 'documento']);
+        /*$libros = DB::table('libros')->get(['id', 'titulo', 'id_autor']);
+        $socios = DB::table('socios')->get(['id', 'nombre', 'apellido', 'documento']);*/
+
+        $libros = Libro::pluck('titulo', 'id')->prepend('Selecciona un libro...');
+        $socios = Socio::select(
+            DB::raw('CONCAT(nombre," ", apellido) AS nombre'), 'id')
+            ->pluck('nombre', 'id')
+            ->prepend('Selecciona un socio...');
 
         return view('prestamos.create', compact('libros', 'socios'));
     }
