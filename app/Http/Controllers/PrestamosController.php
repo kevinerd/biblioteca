@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePrestamoRequest;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 use App\Prestamo;
 use DB;
 
@@ -59,9 +61,38 @@ class PrestamosController extends Controller {
         return redirect()->route('prestamos.index')->with('info', 'Préstamo actualizado correctamente.');
     }
 
-    public function destroy($id){
-        Prestamo::findOrFail($id)->delete();
+    public function destroy(Prestamo $prestamo){
+        $prestamo->delete();
 
         return redirect()->route('prestamos.index');
+    }
+
+    public function create_aviso($id){
+        $prestamo = DB::table('prestamos')
+            ->select('prestamos.*', 'socios.*', 'libros.titulo')
+            ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
+            ->join('socios', 'prestamos.id_socio', '=', 'socios.id')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
+            ->where('prestamos.id', '=', $id)->get();
+        return view('emails.aviso_prestamo', compact('prestamo'));
+    }
+
+    public function send_aviso(Request $request){
+        //guarda el valor de los campos enviados desde el form en un array
+        $data = $request->all();
+
+        //se envia el array y la vista lo recibe en llaves individuales {{ $email }} , {{ $subject }}...
+        Mail::send('emails.message', $data, function($message) use ($request) {
+            //remitente
+            $message->from('admin@biblioteca.dev', 'Biblioteca Popular Susana Llera');
+
+            //asunto
+            $message->subject($request->subject);
+
+            //receptor
+            $message->to($request->email)->subject($request->subject);
+
+        });
+        return redirect()->route('prestamos.index')->with('info', 'Aviso enviado correctamente.');
     }
 }

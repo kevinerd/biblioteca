@@ -1,1 +1,0 @@
-Hola {{  $user->name  }}Gracias por registrarte. Por favor verifica tu cuenta usando el siguiente link:{{  route('user.verify', $user->verification_token)  }}

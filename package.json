@@ -25,6 +25,7 @@
     "vue": "^2.5.7"
   },
   "dependencies": {
+    "select2": "^4.0.6-rc.1",
     "webpack-livereload-plugin": "^1.0.0"
   },
   "name": "biblioteca",

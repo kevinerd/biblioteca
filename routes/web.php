@@ -172,3 +172,27 @@ Route::post('password/reset', array(
 ));*/
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+/* Rutas para el envío de mails */
+
+//----  AVISO DE PRÉSTAMO VENCIDO  ----//
+Route::get('admin/prestamos/aviso/{id}', array(
+    'as' => 'admin.prestamos.aviso',
+    'uses' => 'PrestamosController@create_aviso'
+));
+
+Route::post('admin/prestamos/send_aviso', array(
+    'as' => 'admin.prestamos.send_aviso',
+    'uses' => 'PrestamosController@send_aviso'
+));
+
+
+/*Route::post('send', array(
+    'as' => 'send',
+    'uses' => 'MailController@send'
+));
+Route::get('contact', array(
+    'as' => 'contact',
+    'uses' => 'MailController@index'
+));*/
