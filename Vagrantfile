@@ -47,3 +47,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
     end
 end
+
+Vagrant.configure(2) do |config|
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.gui = true
+    end
+end
