@@ -20,11 +20,16 @@ Route::resource('admin/informes', 'InformesController');
 
 Route::resource('admin/socios', 'SociosController');
 
-Route::resource('admin/usuarios', 'UserController', ['except'=>['create', 'edit']]);
+Route::resource('admin/usuarios', 'UserController');
 
 Route::get('user/verify/{token}', array(
     'as' => 'user.verify',
     'uses' => 'UserController@verify'
+));
+
+Route::get('user/{usuario}/resend', array(
+    'as' => 'resend',
+    'uses' => 'UserController@resend'
 ));
 
 Route::resource('admin/prestamos', 'PrestamosController');
@@ -108,20 +113,20 @@ Route::get('site/eventos/{id}', array(
 
 /* Rutas de login, registro y password */
 
-
-
-/*Route::get('test', function(){
-    $user = new App\User;
-    $user->name = 'Kevin';
-    $user->email = 'kevinjf2011@gmail.com';
-    $user->password = bcrypt('123123');
+/*Route::get('test', function (Faker\Generator $faker) {
+    return [
+        $user = new App\User,
+        $user->name = 'Kevin',
+        $user->email = 'kevinjf2011@gmail.com',
+        $user->password = bcrypt('123123'),
+        $user->remember_token = str_random(10),
+        $user->verified = $verificado = $faker->randomElement([App\User::USUARIO_VERIFICADO, App\User::USUARIO_NO_VERIFICADO]),
+        $user->verification_token = $verificado == App\User::USUARIO_VERIFICADO ? null : App\User::generarTokenVerificacion(),
+        $user->admin = $faker->randomElement([App\User::USUARIO_ADMIN, App\User::USUARIO_REGULAR])
+    ];
     $user->save();
-
     return $user;
 });*/
-
-
-
 
 Route::get('login', array(
     'as' => 'login',

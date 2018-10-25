@@ -14,7 +14,6 @@ class CreateUsuarioRequest extends FormRequest{
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'usuario' => 'required',
             'password' => 'required|min:6|confirmed',
             'admin' => 'in:'.User::USUARIO_ADMIN.','.User::USUARIO_REGULAR
         ];
