@@ -22,12 +22,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = 'admin/libros';
+    protected $redirectTo;
 
     /**
      * Create a new controller instance.
@@ -39,18 +34,20 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(){
-        return view('auth.login');
+    protected function authenticated(){
+        if(Auth::user()->admin === 'true'){
+            return redirect()->route('prestamos.index');
+        }
+        else{
+            return redirect()->route('site.eventos');
+        }
     }
 
-    public function auth(){
+    public function logout(Request $request){
+        $this->guard()->logout();
 
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/site');
     }
-
-    public function logout(){
-        Auth::guard($this->getGuard())->Logout();
-
-        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
-    }
-
 }

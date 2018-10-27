@@ -146,10 +146,10 @@ Route::get('site/register', array(
 
 Route::post('register', array(
     'as' => 'register',
-    'uses' => 'Auth\RegisterController@register'
+    'uses' => 'UserController@registerSite'
 ));
 
-Route::get('password/reset', array(
+Route::get('site/password/reset', array(
     'as' => 'password.request',
     'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
 ));

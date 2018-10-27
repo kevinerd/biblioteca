@@ -9,6 +9,10 @@ use App\Prestamo;
 use DB;
 
 class PrestamosController extends Controller {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function index(){
         $prestamos = DB::table('prestamos')
             ->join('users', 'prestamos.id_user', '=', 'users.id')
