@@ -124,15 +124,13 @@ Route::get('site/eventos/{id}', array(
     return $user;
 });*/
 
-Route::get('login', array(
-    'as' => 'login',
+Route::get('site/login', array(
+    'as' => 'site.login',
     'uses' => 'Auth\LoginController@showLoginForm'
 ));
 
-
-
-Route::post('ingreso/login', array(
-    'as' => 'ingreso.login',
+Route::post('login', array(
+    'as' => 'login',
     'uses' => 'Auth\LoginController@login'
 ));
 
@@ -141,8 +139,8 @@ Route::post('logout', array(
     'uses' => 'Auth\LoginController@logout'
 ));
 
-Route::get('register', array(
-    'as' => 'register',
+Route::get('site/register', array(
+    'as' => 'site.register',
     'uses' => 'Auth\RegisterController@showRegistrationForm'
 ));
 
