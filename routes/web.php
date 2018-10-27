@@ -18,8 +18,6 @@ Route::resource('admin/autores', 'AutoresController');
 
 Route::resource('admin/informes', 'InformesController');
 
-Route::resource('admin/socios', 'SociosController');
-
 Route::resource('admin/usuarios', 'UserController');
 
 Route::get('user/verify/{token}', array(
@@ -47,8 +45,6 @@ Route::resource('admin/grupos_autores', 'GruposAutoresController');
 Route::resource('admin/grupos_eventos', 'GruposEventosController');
 
 Route::resource('admin/grupos_talleres', 'GruposTalleresController');
-
-Route::resource('admin/grupos_socios', 'GruposSociosController');
 
 Route::get('admin', array(
     'as' => 'admin',

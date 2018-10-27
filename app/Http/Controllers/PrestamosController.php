@@ -3,21 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePrestamoRequest;
-use App\Socio;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Prestamo;
-use App\Libro;
 use DB;
 
 class PrestamosController extends Controller {
     public function index(){
         $prestamos = DB::table('prestamos')
-            ->join('socios', 'prestamos.id_socio', '=', 'socios.id')
+            ->join('users', 'prestamos.id_user', '=', 'users.id')
             ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
             ->get([
-                'prestamos.*', 'socios.nombre',
-                'socios.apellido', 'libros.titulo'
+                'prestamos.*', 'users.name', 'libros.titulo'
             ]);
 
         Prestamo::all();
@@ -27,7 +24,7 @@ class PrestamosController extends Controller {
 
     public function create(){
         $libros = DB::table('libros')->get(['id', 'titulo', 'id_autor']);
-        $socios = DB::table('socios')->get(['id', 'nombre', 'apellido', 'documento']);
+        $users = DB::table('users')->get(['id', 'name', 'documento']);
 
         /*$libros = Libro::pluck('titulo', 'id')->prepend('Selecciona un libro...');
         $socios = Socio::select(
@@ -35,7 +32,7 @@ class PrestamosController extends Controller {
             ->pluck('nombre', 'id')
             ->prepend('Selecciona un socio...');*/
 
-        return view('prestamos.create', compact('libros', 'socios'));
+        return view('prestamos.create', compact('libros', 'users'));
     }
 
     public function store(CreatePrestamoRequest $request){
@@ -46,9 +43,9 @@ class PrestamosController extends Controller {
 
     public function show($id) {
         $prestamo = DB::table('prestamos')
-            ->select('prestamos.*', 'socios.nombre', 'socios.apellido', 'libros.titulo')
+            ->select('prestamos.*', 'users.name', 'libros.titulo')
             ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
-            ->join('socios', 'prestamos.id_socio', '=', 'socios.id')
+            ->join('users', 'prestamos.id_socio', '=', 'users.id')
             ->join('autores', 'libros.id_autor', '=', 'autores.id')
             ->where('prestamos.id', '=', $id)->get();
 
@@ -58,9 +55,9 @@ class PrestamosController extends Controller {
     public function edit($id){
         $prestamo = Prestamo::findOrFail($id);
         $libros = DB::table('libros')->get(['id', 'titulo', 'id_autor']);
-        $socios = DB::table('socios')->get(['id', 'nombre', 'apellido', 'documento']);
+        $users = DB::table('users')->get(['id', 'name', 'documento']);
 
-        return view('prestamos.edit', compact('prestamo', 'libros', 'socios'));
+        return view('prestamos.edit', compact('prestamo', 'libros', 'users'));
     }
 
     public function update(CreatePrestamoRequest $request, $id){
@@ -77,9 +74,9 @@ class PrestamosController extends Controller {
 
     public function create_aviso($id){
         $prestamo = DB::table('prestamos')
-            ->select('prestamos.*', 'socios.*', 'libros.titulo')
+            ->select('prestamos.*', 'users.*', 'libros.titulo')
             ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
-            ->join('socios', 'prestamos.id_socio', '=', 'socios.id')
+            ->join('users', 'prestamos.id_user', '=', 'users.id')
             ->join('autores', 'libros.id_autor', '=', 'autores.id')
             ->where('prestamos.id', '=', $id)->get();
         return view('emails.aviso_prestamo', compact('prestamo'));
