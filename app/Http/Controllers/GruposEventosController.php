@@ -7,6 +7,11 @@ use App\GruposEventos;
 use App\Http\Requests\CreateGruposEventosRequest;
 
 class GruposEventosController extends Controller {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     public function index(){
         $grupos= DB::table('grupos_eventos')->get();
 

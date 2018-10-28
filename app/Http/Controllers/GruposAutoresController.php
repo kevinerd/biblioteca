@@ -7,6 +7,11 @@ use App\Http\Requests\CreateGruposAutoresRequest;
 use Illuminate\Support\Facades\DB;
 
 class GruposAutoresController extends Controller {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     public function index(){
         $grupos= DB::table('grupos_autores')->get();
 

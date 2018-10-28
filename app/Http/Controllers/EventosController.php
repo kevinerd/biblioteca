@@ -7,6 +7,11 @@ use DB;
 use App\Evento;
 
 class EventosController extends Controller{
+    public function __construct(){
+        $this->middleware('auth')->except('site', 'siteShow');
+        $this->middleware('admin')->except('site', 'siteShow');
+    }
+
     public function index(){
         $eventos = DB::table('eventos')->get();
 

@@ -7,6 +7,11 @@ use App\Http\Requests\CreateTalleresRequest;
 use DB;
 
 class TalleresController extends Controller {
+    public function __construct(){
+        $this->middleware('auth')->except('site', 'siteShow');
+        $this->middleware('admin')->except('site', 'siteShow');
+    }
+
     public function index() {
         $talleres = DB::table('talleres')->get();
 

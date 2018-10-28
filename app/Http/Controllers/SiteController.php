@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Libro;
 use App\Evento;
-use App\Autor;
 use App\Http\Requests\ValidateForm;
 use Illuminate\Support\Facades\DB;
 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+    public function __construct(){
+        $this->middleware('auth')->only('admin');
+        $this->middleware('admin')->only('admin');
+    }
     public function home(){
         $libros = DB::table('libros')
             ->where('destacado', '=', '1')->get();
@@ -35,7 +37,7 @@ class SiteController extends Controller
     }*/
 
     public function formularioSite(ValidateForm $request) {
-        $data = $request->all();
+        $request->all();
 
         return back()
             ->with('info', 'Tu mensaje ha sido enviado, en breve recibirás una respuesta.');

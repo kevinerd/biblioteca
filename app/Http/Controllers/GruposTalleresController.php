@@ -7,6 +7,11 @@ use DB;
 use App\Http\Requests\CreateGruposTalleresRequest;
 
 class GruposTalleresController extends Controller {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     public function index(){
         $grupos= DB::table('grupos_talleres')->get();
 

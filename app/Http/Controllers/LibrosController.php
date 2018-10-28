@@ -7,16 +7,15 @@ use App\Libro;
 use DB;
 
 class LibrosController extends Controller {
+    public function __construct(){
+        $this->middleware('auth')->except('site', 'siteShow');
+        $this->middleware('admin')->except('site', 'siteShow');
+    }
+
     public function index(){
         $libros = DB::table('libros')->get();
 
-        Libro::all();
-        if(isset($_SESSION['usuario'])){
-            return view('libros.index_admin', compact('libros'));
-        }
-        else{
-            return view('libros.index', compact('libros'));
-        }
+        return view('libros.index_admin', compact('libros'));
     }
 
     public function create(){

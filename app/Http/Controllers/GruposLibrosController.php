@@ -8,6 +8,11 @@ use App\GruposLibros;
 use Illuminate\Support\Facades\DB;
 
 class GruposLibrosController extends Controller{
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     public function index(){
         $grupos= DB::table('grupos_libros')->get();
 
