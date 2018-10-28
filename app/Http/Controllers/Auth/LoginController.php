@@ -22,7 +22,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $redirectTo;
+    protected $redirectTo = '/site';
 
     /**
      * Create a new controller instance.
@@ -39,8 +39,12 @@ class LoginController extends Controller
             return redirect()->route('prestamos.index');
         }
         else{
-            return redirect()->route('site.eventos');
+            return redirect()->route('site.usuario', Auth::user()->id);
         }
+    }
+
+    public function redirectPath(){
+        return $this->redirectTo('/site');
     }
 
     public function logout(Request $request){
