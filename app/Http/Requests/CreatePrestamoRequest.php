@@ -12,7 +12,7 @@ class CreatePrestamoRequest extends FormRequest {
     public function rules() {
         return [
             'id_libro' => 'required',
-            'id_socio' => 'required',
+            'id_user' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required',
             'devuelto' => 'required',

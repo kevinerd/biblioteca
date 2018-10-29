@@ -160,7 +160,7 @@ Route::post('site/password/email', array(
 ));
 
 Route::get('site/password/reset/{token}', array(
-    'as' => 'password.reset',
+    'as' => 'passwords.reset',
     'uses' => 'Auth\ResetPasswordController@showResetForm'
 ));
 

@@ -8,8 +8,8 @@ use DB;
 
 class MensajesController extends Controller{
     public function __construct(){
-        $this->middleware('auth')->except('create');
-        $this->middleware('admin')->except('create');
+        $this->middleware('auth')->except('create', 'store');
+        $this->middleware('admin')->except('create', 'store');
     }
 
     public function index(){

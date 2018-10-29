@@ -13,7 +13,7 @@ class Prestamo extends Model {
     protected $date = ['deleted_at'];
 
     protected $fillable = [
-        'id_libro', 'id_socio', 'fecha_inicio',
+        'id_libro', 'id_user', 'fecha_inicio',
         'fecha_fin', 'fecha_devuelto', 'devuelto',
         'aviso'
     ];
