@@ -15,7 +15,7 @@ class LibrosController extends Controller {
     public function index(){
         $libros = DB::table('libros')->get();
 
-        return view('libros.index_admin', compact('libros'));
+        return view('libros.index', compact('libros'));
     }
 
     public function create(){
