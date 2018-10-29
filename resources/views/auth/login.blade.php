@@ -11,7 +11,10 @@
         </div>
     @endif
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
+            <img src="../img/logo2.jpg" class="rounded w-100" alt="logo-biblioteca">
+        </div>
+        <div class="col-md-4">
             <div class="card card-default">
                 <div class="card-header"><b>Ingresa</b></div>
                 <div class="card-body">
@@ -81,6 +84,9 @@
                     {{  Form::close()  }}
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
+            <img src="../img/logo2.jpg" class="rounded w-100" alt="logo-biblioteca">
         </div>
     </div>
 </div>
