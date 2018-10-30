@@ -50,7 +50,7 @@ class PrestamosController extends Controller {
         $prestamo = DB::table('prestamos')
             ->select('prestamos.*', 'users.name', 'libros.titulo')
             ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
-            ->join('users', 'prestamos.id_socio', '=', 'users.id')
+            ->join('users', 'prestamos.id_user', '=', 'users.id')
             ->join('autores', 'libros.id_autor', '=', 'autores.id')
             ->where('prestamos.id', '=', $id)->get();
 
