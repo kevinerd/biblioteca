@@ -13,8 +13,20 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+html{
+  min-height: 100%;
+  position: relative;
+}
+
 body{
   background-color: #d2d2d2b3;
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.activeMenu{
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .footer-b{
@@ -35,7 +47,134 @@ body{
   font-weight: bold;
 }
 
-.error{
-  color:#ff0000;
-  font-size: 12px;
+.errors{
+  color: #c10600;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.alert-success{
+  color: #194b1f;
+  background-color: #57d14a;
+  border-color: #33b951;
+}
+
+.banner{
+  width: 750px;
+  height: 400px;
+}
+
+.card{
+  display: inline-block!important;
+  position: relative!important;
+  margin: 5px!important;
+}
+
+.card-register{
+  width: 600px!important;
+}
+
+.evento{
+  display: inline-block!important;
+  position: relative!important;
+  margin: 5px!important;
+  width: 345px;
+  height: 340px;
+}
+
+.libro{
+  display: inline-block!important;
+  position: relative!important;
+  margin: 5px!important;
+  width: 270px;
+  height: 430px;
+}
+
+.tarjeta{
+  width: 150px!important;
+  height: 250px!important;
+  margin-top: 20px!important;
+}
+
+.tarjeta-autores{
+  width: 170px!important;
+  height: 180px!important;
+  margin-top: 20px!important;
+}
+
+.historia{
+  width: 85%;
+  margin: 20px;
+}
+
+.img-historia{
+  display: inline-block;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Roboto;
+}
+
+.img-historia img{
+  width: 400px;
+}
+
+h1, h2{
+  font-family: 'Maven Pro Black', serif;
+}
+
+h3, h4, h5, h6{
+  font-family: 'Cinzel', serif;
+}
+
+p{
+  font-size: 20px;
+}
+
+.semana{
+  width: 250px;
+}
+
+.rounded{
+  margin: 30px 10px 10px 10px;
+}
+
+.carousel, carousel img{
+  width: 970px!important;
+  height: 560px!important;
+}
+.carousel{
+  margin: 10px!important;
+}
+
+.dropdown-menu{
+  width: 215px!important;
+}
+
+.thumb_book{
+  width: 250px;
+}
+
+.ficha{
+  background-color: #ffffffb3;
+  margin: 25px;
+  border-radius: 10px;
+  box-shadow: 10px 10px;
+  border: 2px solid #868686;
+  padding: 20px;
+  /*box-shadow: 10px 10px #9da1a199;*/
+}
+
+.ficha-prestamo{
+  background-color: #ffffffb3;
+  margin: 25px;
+  border-radius: 10px;
+  box-shadow: 10px 10px;
+  border: 2px solid #868686;
+  padding: 20px;
+  /*box-shadow: 10px 10px #9da1a199;*/
+  width: 850px;
+}
+
+.bg-dark {
+  background-color: #aec547 !important;
 }

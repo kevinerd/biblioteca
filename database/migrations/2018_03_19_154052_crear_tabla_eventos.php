@@ -14,16 +14,16 @@ class CrearTablaEventos extends Migration
     public function up()
     {
         Schema::create('eventos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
-            $table->string('fecha');
-            $table->string('hora');
-            $table->string('invitados');
+            $table->date('fecha');
+            $table->time('hora')->nullable();
             $table->text('descripcion');
-            $table->string('thumb_banner');
-            $table->string('thumb_afiche');
-            $table->integer('id_categoria');
+            $table->string('thumb')->nullable();
+            $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_eventos');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +34,6 @@ class CrearTablaEventos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('eventos');
     }
 }

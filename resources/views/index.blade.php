@@ -4,24 +4,31 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h1>Mensajes</h1>
+                <div class="admin-box">
+                    <h1>Mensajes</h1>
+                </div>
             </div>
             <div class="col-md-4">
-                <h1>Libros</h1>
+                <div class="admin-box">
+                    <h1>Prestamos</h1>
+                </div>
             </div>
             <div class="col-md-4">
-                <h1>Socios</h1>
+                <div class="admin-box">
+                    <h1>Eventos</h1>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <h1>Prestamos</h1>
+            <div class="col-md-8">
+                <div class="admin-box">
+                    <h1>Cambiar banner principal</h1>
+                </div>
             </div>
             <div class="col-md-4">
-                <h1>Admin</h1>
-            </div>
-            <div class="col-md-4">
-                <h1>Admin</h1>
+                <div class="admin-box">
+                    <h1>Mensajes</h1>
+                </div>
             </div>
         </div>
     </div>

@@ -2,37 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateLibroRequest;
 use App\Libro;
 use DB;
 
 class LibrosController extends Controller {
+    public function __construct(){
+        $this->middleware('auth')->except('site', 'siteShow');
+        $this->middleware('admin')->except('site', 'siteShow');
+    }
+
     public function index(){
         $libros = DB::table('libros')->get();
-
-        Libro::all();
 
         return view('libros.index', compact('libros'));
     }
 
     public function create(){
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
+        $grupos = DB::table('grupos_libros')->get();
 
-        return view('libros.create', compact('autores'));
+        return view('libros.create', compact('autores', 'grupos'));
     }
 
-    public function store(Request $request){
+    public function store(CreateLibroRequest $request){
         Libro::create($request->all());
-        return back()
-            ->with('info', 'Libro cargado correctamente.');
+
+        return redirect()->route('libros.index')->with('info', 'Libro cargado correctamente.');
     }
 
     public function show($id){
-        $libro = Libro::findOrFail($id);
+        $libro = DB::table('libros')
+            ->select('libros.*')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
+            ->where('libros.id', '=', $id)->get();
 
-        $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
+        $autor = DB::table('autores')
+            ->select('autores.nombre', 'autores.apellido', 'autores.thumb')
+            ->join('libros', 'autores.id', '=', 'libros.id_autor')
+            ->where('libros.id', '=', $id)->get();
 
-        return view('libros.show', compact('libro', 'autores'));
+        return view('libros.show', compact('libro', 'autor'));
     }
 
     public function edit($id){
@@ -40,22 +50,46 @@ class LibrosController extends Controller {
 
         $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
 
-        return view('libros.edit', compact('libro', 'autores'));
+        $grupos = DB::table('grupos_libros')->get();
+
+        return view('libros.edit', compact('libro', 'autores', 'grupos'));
     }
 
-    public function update(Request $request, $id){
+    public function update(CreateLibroRequest $request, $id){
         Libro::findOrFail($id)->update($request->all());
 
-        return redirect()->route('libros.index');
+        return redirect()->route('libros.index')->with('info', 'Libro modificado correctamente.');
     }
 
     public function destroy($id){
         Libro::findOrFail($id)->delete();
+
         return redirect()->route('libros.index');
     }
 
-    public function getAutorId($id){
-        $sql = "SELECT nombre, apellido FROM autores INNER JOIN libros ON libros.idAutor = autores.id WHERE autores.id = $id";
-        return $sql;
+    public function site(){
+        $libros = DB::table('libros')->get();
+
+        $autores = DB::table('autores')->get(['id', 'nombre', 'apellido']);
+
+        $grupos = DB::table('grupos_libros')->get();
+
+        Libro::all();
+
+        return view('site.libros', compact('libros', 'autores', 'grupos'));
+    }
+
+    public function siteShow($id){
+        $libro = DB::table('libros')
+            ->select('libros.*')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
+            ->where('libros.id', '=', $id)->get();
+
+        $autor = DB::table('autores')
+            ->select('autores.id', 'autores.nombre', 'autores.apellido', 'autores.thumb')
+            ->join('libros', 'autores.id', '=', 'libros.id_autor')
+            ->where('libros.id', '=', $id)->get();
+
+        return view('site.libro', compact('libro', 'autor'));
     }
 }

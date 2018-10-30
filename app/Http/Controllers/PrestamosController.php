@@ -2,218 +2,107 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePrestamoRequest;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Prestamo;
+use DB;
 
-class PrestamosController extends Controller
-{
-    public function prestamos(){
-        return view('prestamos');
+class PrestamosController extends Controller {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
     }
 
-    public function store () {
-        $response = array();
+    public function index(){
+        $prestamos = DB::table('prestamos')
+            ->join('users', 'prestamos.id_user', '=', 'users.id')
+            ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
+            ->get([
+                'prestamos.*', 'users.name', 'libros.titulo'
+            ]);
 
-        try {
-            // Busco los datos necesarios
-            $id_productor   =   Auth::user()->productor->id;
-            $id_compania    =   Input::get("id_compania", '');
-            $requestID      =   Input::get("requestID", '');
-            $error          =   Input::get("error", '');
-            $id_cotizacion  =   Input::get("id_cotizacion", '');
-            $emisionDetalles=   Input::get("emision", '');
-            $nro_propuesta  =   Input::get("nro_propuesta", '');
-            $param_emision  =   Input::get("parametros_emision", '');
-            if ($requestID === null)
-                throw new Exception("No esta difinido requestID", 500);
+        Prestamo::all();
 
-            DB::beginTransaction();
-            // Guarda datos emision
-            $emision                        =   new Emision();
-            $emision->id_productor          =   $id_productor;
-            $emision->id_compania           =   $id_compania;
-            $emision->requestID             =   $requestID;
-            $emision->error                 =   1;
-            $emision->nro_poliza            =   ($emisionDetalles['enlace'] == 'CALEDONIA' || $emisionDetalles['enlace'] == 'ORBIS' ) ? $emisionDetalles['emision']['nroPoliza'] : $emisionDetalles['emision']['id'];
-            $emision->premio                =   $emisionDetalles['emision']['premio'];
-            $emision->prima                 =   $emisionDetalles['emision']['prima'];
-            $emision->detalle               =   json_encode($emisionDetalles['emision']);
-            $emision->nro_propuesta         =   $nro_propuesta;
-            $emision->detalles_parametros   =   json_encode($param_emision);
-            $emision->estado_emision        =   "";
-
-            $emision->save();
-
-            // Actualiza contratacion - asigna emision
-            $contratacion             = ContratacionAuto::where('id', '=', $id_cotizacion)->orderBy('id', 'desc')
-                ->first();
-            $contratacion->id_emision = $emision->id;
-            $contratacion->save();
-
-            DB::commit();
-            $response['error']        = false;
-            $response['mensaje']      = 'Se guardó correctamente';
-            $response['contratacion'] = $contratacion->id;
-        } catch (Exception $ex) {
-            DB::rollback();
-            $response['mensaje'] = 'Error: ' . $ex->getMessage();
-            $response['error']   = true;
-        }
-        return Response::json($response);
+        return view('prestamos.index', compact('prestamos'));
     }
 
-    public function listadoEmisiones ($pantallaInicial = null) {
-        $response = array();
+    public function create(){
+        $libros = DB::table('libros')->get(['id', 'titulo', 'id_autor']);
+        $users = DB::table('users')->get(['id', 'name', 'documento']);
 
-        if (Auth::user()->tipo == 'empleados' || (Session::get('nivelOrganizacional') == 'organizador' && Auth::user()->tipo == 'productores')) {
-            $id_productor = Input::get('productor', "");
-        } else {
-            $id_productor = Auth::user()->productor->id;
-        }
+        /*$libros = Libro::pluck('titulo', 'id')->prepend('Selecciona un libro...');
+        $socios = Socio::select(
+            DB::raw('CONCAT(nombre," ", apellido) AS nombre'), 'id')
+            ->pluck('nombre', 'id')
+            ->prepend('Selecciona un socio...');*/
 
-        $usuarioActual  = usuarioActualParaNivelOrganizacional();
-        $id_productores = [];
-        $id_usuarios    = [];
-        //preguntamos si tiene habilitado el modulo
-        if (isModuloEnabled('organizador')) {
-            if(is_array($usuarioActual) == true){
-                $usuarioActual = $usuarioActual['usuarioAbuelo'];
-            }
-            $id_usuarios_productor = OrganizadorProductor::where('id_usuario_organizador', '=',$usuarioActual->id)
-                ->pluck('id_usuario_productor')->toArray();
-            //guardamos los ids de productores y de usuarios en variables distintas, para luego hacer las consultas
-            //tanto en las cotizaciones cabeceras
-            $id_usuarios = $id_usuarios_productor;
-            $id_productores = Productor::whereIn('id_usuario',$id_usuarios)->pluck('id')->toArray();
-            $id_usuarios[] =$usuarioActual->id;
-            $id_productores[] = $usuarioActual->productor->id;
-        }
-
-        // si se muestra en la pantalla inicial, muestra los datos del ejecutivo o de los productores que tiene a cargo
-        if( $pantallaInicial == true ){
-            if(isModuloEnabled('ejecutivo_cuenta')){
-                // si es ejecutivo, traemos los productores que tiene a cargo
-                if( Auth::user()->productor->ejecutivo_cta == 1 ){
-                    $productores_a_cargo = Productor::where('id_productor_ejecutivo_responsable','=',Auth::user()->productor->id)->pluck('id')->toArray();
-                    $id_productores = array_intersect($productores_a_cargo,$id_productores);
-                    $id_productores[] = Auth::user()->productor->id;
-                }
-            }
-        }
-
-        $cliente = Input::get('txtCliente', "");
-        $vehiculo = Input::get('txtVehiculo', "");
-        $origen = Input::get('origen', '');
-
-        //Proceso la fecha desde
-        if (Input::get("fechaDesde", "") === "") {
-            $fechaDesde = "1990-01-01- 00:00:00";
-        } else {
-            $fechaDesde = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', Input::get("fechaDesde", ""))));
-        }
-        //Proceso la fecha hasta
-        if (Input::get("fechaHasta", "") === "")
-            $fechaHasta = (date("Y") + 1) . date("-m-d") . date(" H:i:s");
-        else
-            $fechaHasta = date("Y-m-d 23:59:59", strtotime(str_replace('/', '-', Input::get("fechaHasta", ""))));
-
-        $query = Emision::query();
-        if ($id_productor != "") {
-            $query->where('id_productor', '=', $id_productor);
-        }
-        if ($cliente != '') {
-            $query->join('contrataciones_auto as emision_auto', 'emision_auto.id_emision','=','emisiones.id');
-            $query->join('clientes as cliente', 'cliente.id','=','emision_auto.id_cliente');
-            $query->where('cliente.nombre', 'LIKE', '%'.$cliente.'%');
-        }
-        /*if ($vehiculo != '') {
-            //$query->join('versiones as version', 'version.id_version', '=', 'cotizaciones_cabecera.version');
-            //$query->join('modelos as modelo', 'modelo.id_modelo', '=', 'cotizaciones_cabecera.modelo');
-            $query->join('marcas as marca', 'marca.id_marca', '=', 'cotizaciones_cabecera.marca');
-            $query->whereHas('vehiculoMarca', function ($q) use ($vehiculo) {
-                $q->where('descripcion', 'LIKE', '%' . $vehiculo . '%');
-            });
-        }*/
-        /*if($origen != '')
-            $query->where('cotizaciones_cabecera.origen', '=', $origen);*/
-        $query->join('companias', 'emisiones.id_compania', '=', 'companias.id');
-        $query  = $query->whereBetween('emisiones.created_at', array($fechaDesde, $fechaHasta));
-        if(count($id_productores)>0){
-            $query = $query->whereIn('emisiones.id_productor',$id_productores);
-        }
-        $emisionesCabecera = $query->select(array('emisiones.*','companias.enlace'))
-            ->orderBy('emisiones.created_at', 'desc');
-
-        // si viene de la pantalla inicial, retornamos la lista de cotizaciones
-        if( $pantallaInicial == true ){
-            return $emisionesCabecera->take(4)->get();
-        }
-
-        $emisionesCabecera = $emisionesCabecera->paginate(Input::get('paginacion', 10));
-
-
-        $response['emisionesCabecera']   =   $emisionesCabecera;
-
-        $productores = Productor::join('usuarios as usuario', 'usuario.id','=','productores.id_usuario')
-            ->orderBy('usuario.apellido', 'asc')
-            ->select('productores.*')
-            ->with('usuario')
-            ->where('usuario.id','<>','0')
-            ->where('usuario.eliminado', '=', 0);
-        if(count($id_productores)>0) {
-            $productores = $productores->whereIn('usuario.id', $id_usuarios);
-        }
-        $response['productores'] = $productores->get();
-
-        return View::make('emisiones.listado')->with($response);
+        return view('prestamos.create', compact('libros', 'users'));
     }
 
-    public function ver($id) {
+    public function store(CreatePrestamoRequest $request){
+        Prestamo::create($request->all());
 
-        $query    = Emision::query();
-        $emision  = $query->where('id', '=', $id)
-            ->select(array('emisiones.*'))->get()[0];
+        return redirect()->route('prestamos.index')->with('info', 'Prestamo registrado correctamente.');
+    }
 
-        $contratacion       =   $emision->contratacion;
-        $hashCotizacion     =   $contratacion->cotizacion->hash;
-        $idUltimaCotizacion =   $contratacion->id_cotizacion;
-        $idCobertura        =   $contratacion->id_cobertura;
+    public function show($id) {
+        $prestamo = DB::table('prestamos')
+            ->select('prestamos.*', 'users.name', 'libros.titulo')
+            ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
+            ->join('users', 'prestamos.id_user', '=', 'users.id')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
+            ->where('prestamos.id', '=', $id)->get();
 
-        $cotizacionCabecera =   CotizacionCabecera::where('hash','=', $hashCotizacion)->first();
-        $compania           =   Compania::where('id', '=', $emision->id_compania)->first()->enlace;
+        return view('prestamos.show', compact('prestamo'));
+    }
 
-        /*$contratacion   =   $emision->contratacion;
-        // traigo el dato de cotizacion, ya que necesito los parametros de cotizacion
-        $cotizacion =   $contratacion->cotizacion;
-        $cliente    =   $contratacion->cliente;
+    public function edit($id){
+        $prestamo = Prestamo::findOrFail($id);
+        $libros = DB::table('libros')->get(['id', 'titulo', 'id_autor']);
+        $users = DB::table('users')->get(['id', 'name', 'documento']);
 
-        $vehiculo['marca']['id']   =   $contratacion->vehiculoCliente->id_marca;
-        $vehiculo['marca']['descripcion']   =   $contratacion->vehiculoCliente->marca->descripcion;
+        return view('prestamos.edit', compact('prestamo', 'libros', 'users'));
+    }
 
-        $vehiculo['modelo']['id']   =   $contratacion->vehiculoCliente->id_modelo;
-        $vehiculo['modelo']['descripcion']   =   $contratacion->vehiculoCliente->modelo->descripcion;
+    public function update(CreatePrestamoRequest $request, $id){
+        Prestamo::findOrFail($id)->update($request->all());
 
-        $vehiculo['version']['id']   =   $contratacion->vehiculoCliente->id_version;
-        $vehiculo['version']['descripcion']   =   $contratacion->vehiculoCliente->version->descripcion;
+        return redirect()->route('prestamos.index')->with('info', 'Préstamo actualizado correctamente.');
+    }
 
-    */
-        /*return View::make('emisiones.detalle')->with(array('emision' => $emision, 'compania' => $compania,
-            'cotizacion' => $cotizacion));*/
-        /*$response   =   [];
-        $response['id'] =   $id;
-        $response['emision'] =   true;
+    public function destroy(Prestamo $prestamo){
+        $prestamo->delete();
 
-        Redirect::route("companias.multicotizador")->with($response);*/
+        return redirect()->route('prestamos.index');
+    }
 
-        $cia        =   new CompaniasController();
-        $response   =   $cia->multicotizador($cotizacionCabecera->id, true);
+    public function create_aviso($id){
+        $prestamo = DB::table('prestamos')
+            ->select('prestamos.*', 'users.*', 'libros.titulo')
+            ->join('libros', 'prestamos.id_libro', '=', 'libros.id')
+            ->join('users', 'prestamos.id_user', '=', 'users.id')
+            ->join('autores', 'libros.id_autor', '=', 'autores.id')
+            ->where('prestamos.id', '=', $id)->get();
+        return view('emails.aviso_prestamo', compact('prestamo'));
+    }
 
-        // vamos desde el detalle de emision
-        $response['emision_detalle']    =   true;
-        $response['emision']            =   $emision;
-        $response['compania']           =   $compania;
-        $response['ultCotizacionId']    =   $idUltimaCotizacion;
-        $response['idCobertura']        =   $idCobertura;
+    public function send_aviso(Request $request){
+        //guarda el valor de los campos enviados desde el form en un array
+        $data = $request->all();
 
-        return View::make('companias.multicotizador')->with($response);
+        //se envia el array y la vista lo recibe en llaves individuales {{ $email }} , {{ $subject }}...
+        Mail::send('emails.message', $data, function($message) use ($request) {
+            //remitente
+            $message->from('admin@biblioteca.dev', 'Biblioteca Popular Susana Llera');
+
+            //asunto
+            $message->subject($request->subject);
+
+            //receptor
+            $message->to($request->email)->subject($request->subject);
+
+        });
+        return redirect()->route('prestamos.index')->with('info', 'Aviso enviado correctamente.');
     }
 }

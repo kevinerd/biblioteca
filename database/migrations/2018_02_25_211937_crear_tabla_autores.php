@@ -11,15 +11,16 @@ class CrearTablaAutores extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('autores', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement()->unique();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('nacimiento');
-            $table->string('fallecimiento');
+            $table->string('thumb')->nullable();
+            $table->integer('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos_autores');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,8 +29,7 @@ class CrearTablaAutores extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('autores');
     }
 }
