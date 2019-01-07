@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -20,12 +22,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/site';
 
     /**
      * Create a new controller instance.
@@ -35,5 +32,26 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(){
+        if(Auth::user()->admin === 'true'){
+            return redirect()->route('prestamos.index');
+        }
+        else{
+            return redirect()->route('site.usuario', Auth::user()->id);
+        }
+    }
+
+    public function redirectPath(){
+        return $this->redirectTo('/site');
+    }
+
+    public function logout(Request $request){
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/site');
     }
 }

@@ -1,0 +1,1 @@
+@extends('layouts.layoutAdmin')@section('contenido')@stop
