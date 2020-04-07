@@ -1,1 +1,0 @@
-<?phpnamespace App\Http\Controllers;use App\Informe;use Illuminate\Http\Request;use DB;use Carbon\Carbon;class InformesController extends Controller{    public function __construct(){        $this->middleware('auth');    }}

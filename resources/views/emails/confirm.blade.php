@@ -1,1 +1,0 @@
-Hola {{  $user->name  }}Has cambiado tu correo electrónico, por favor verifica tu nueva dirección.{{  route('user.verify', $user->verification_token)  }}
