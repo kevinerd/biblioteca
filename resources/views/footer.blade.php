@@ -1,1 +1,0 @@
-<footer class="footer-b">    <p class="copyright">Kevin Firmani - 2018 ® &copy;</p></footer>
